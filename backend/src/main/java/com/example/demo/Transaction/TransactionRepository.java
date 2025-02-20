@@ -52,7 +52,7 @@ public class TransactionRepository {
         return this.transactions;
     }
 
-    public void deleteTransaction(long id) {
+    public void deleteTransactionById(long id) {
         /**
          * Removes a transaction with passed id
          * @param id long

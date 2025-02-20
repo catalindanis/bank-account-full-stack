@@ -1,9 +1,9 @@
 package com.example.demo.Transaction;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,16 +32,18 @@ public class TransactionController {
     }
 
     @DeleteMapping("/delete")
-    public void delete(@RequestParam(required = false) Long id, String dateStart, String dateEnd, String type) {
-        if(id != null)
+    public String delete(@RequestParam(required = false) Long id, String dateStart, String dateEnd, String type) {
+        if(id != null) {
             this.transactionService.deleteTransaction(id.longValue());
-        else{
-            if(dateStart == null)
-                this.transactionService.deleteTransactionsByType(type);
-            else if(dateEnd == null)
-                this.transactionService.deleteTransactionFromDay(dateStart);
-            else
-                this.transactionService.deleteTransactionFromInterval(dateStart, dateEnd);
+            return "";
         }
+        int result;
+        if(dateStart == null)
+            result = this.transactionService.deleteTransactionsByType(type);
+        else if(dateEnd == null)
+            result = this.transactionService.deleteTransactionFromDate(dateStart);
+        else
+            result = this.transactionService.deleteTransactionFromInterval(dateStart, dateEnd);
+        return String.valueOf(result);
     }
 }
