@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -113,8 +114,9 @@ public class TransactionService {
          * @return list of transactions
          */
         List<Transaction> transactions = new ArrayList<>();
+        LocalDate realDate = LocalDate.parse(dateEnd);
         for(Transaction transaction : this.getAll())
-            if(transaction.getDate().isBefore(LocalDate.parse(dateEnd)) &&
+            if(transaction.getDate().isBefore(realDate) &&
                 transaction.getAmount() > minAmount)
                 transactions.add(transaction);
         return transactions;
@@ -141,7 +143,34 @@ public class TransactionService {
         for(Transaction transaction : this.getAll())
             if(transaction.getType().equals(type))
                 transactions.add(transaction);
+
+        transactions.sort(Comparator.comparingDouble(Transaction::getAmount));
         return transactions;
+    }
+
+    public Double getSumOfTransactionsByType(String type) {
+        /**
+         * Returns sum of transactions from the repository by a type
+         * @return sum double
+         */
+        double sum = 0.0;
+        for(Transaction transaction : this.getAll())
+            if(transaction.getType().equals(type))
+                sum += transaction.getAmount();
+        return sum;
+    }
+
+    public Double getBalanceOnDate(String date) {
+        /**
+         * Get balance from a date
+         * @return balance double
+         */
+        double balance = 0.0;
+        LocalDate realDate = LocalDate.parse(date).plusDays(1);
+        for(Transaction transaction : this.getAll())
+            if(transaction.getDate().isBefore(realDate))
+                balance += transaction.getAmount();
+        return balance;
     }
 
     private long generateNextId(){

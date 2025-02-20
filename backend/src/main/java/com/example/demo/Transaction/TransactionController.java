@@ -8,11 +8,17 @@ import java.util.List;
 
 @RestController
 public class TransactionController {
+    /**
+     * Controller of transactions endpoints
+     */
 
     private final TransactionService transactionService;
 
     @Autowired
     public TransactionController(TransactionService transactionService) {
+        /**
+         * Constructor of controller
+         */
         this.transactionService = transactionService;
     }
 
@@ -26,6 +32,13 @@ public class TransactionController {
         else if(type != null)
             return this.transactionService.getAllByType(type);
         return this.transactionService.getAll();
+    }
+
+    @GetMapping("/record")
+    public Double getRecord(@RequestParam(required = false) String type, String date) {
+        if(type != null)
+            return this.transactionService.getSumOfTransactionsByType(type);
+        return this.transactionService.getBalanceOnDate(date);
     }
 
     @PostMapping("/add")
