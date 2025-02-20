@@ -31,34 +31,6 @@ public class TransactionService {
         transactionRepository.addTransaction(transaction);
     }
 
-    public Transaction getTransactionById(long id) {
-        /**
-         * Gets a transaction by id from the repository
-         * @return transaction
-         */
-        return this.transactionRepository.getTransactionById(id);
-    }
-
-    public List<Transaction> getAll() {
-        /**
-         * Get all transactions from the repository
-         * @return list of transactions
-         */
-        return this.transactionRepository.getAll();
-    }
-
-    private long generateNextId(){
-        /**
-         * Generate next id for a transaction based on last maximum id
-         * @return id long
-         */
-        long id = 0;
-        for(Transaction transaction : this.getAll()){
-            id = Math.max(id, transaction.getId());
-        }
-        return id + 1;
-    }
-
     public void updateTransaction(long id, String date, double amount, String type) {
         /**
          * Updates a transaction by id with new properties
@@ -117,5 +89,70 @@ public class TransactionService {
         for(Long id : deleteId)
             transactionRepository.deleteTransactionById(id);
         return deleteId.size();
+    }
+
+    public Transaction getTransactionById(long id) {
+        /**
+         * Gets a transaction by id from the repository
+         * @return transaction
+         */
+        return this.transactionRepository.getTransactionById(id);
+    }
+
+    public List<Transaction> getAll() {
+        /**
+         * Get all transactions from the repository
+         * @return list of transactions
+         */
+        return this.transactionRepository.getAll();
+    }
+
+    public List<Transaction> getAllWithMinAmountAndBeforeDate(Double minAmount, String dateEnd) {
+        /**
+         * Get all transactions from the repository with a minimum amount and before a date
+         * @return list of transactions
+         */
+        List<Transaction> transactions = new ArrayList<>();
+        for(Transaction transaction : this.getAll())
+            if(transaction.getDate().isBefore(LocalDate.parse(dateEnd)) &&
+                transaction.getAmount() > minAmount)
+                transactions.add(transaction);
+        return transactions;
+    }
+
+    public List<Transaction> getAllWithMinAmount(Double minAmount) {
+        /**
+         * Get all transactions from the repository with a minimum amount
+         * @return list of transactions
+         */
+        List<Transaction> transactions = new ArrayList<>();
+        for(Transaction transaction : this.getAll())
+            if(transaction.getAmount() > minAmount)
+                transactions.add(transaction);
+        return transactions;
+    }
+
+    public List<Transaction> getAllByType(String type) {
+        /**
+         * Get all transactions from the repository by a type
+         * @return list of transactions
+         */
+        List<Transaction> transactions = new ArrayList<>();
+        for(Transaction transaction : this.getAll())
+            if(transaction.getType().equals(type))
+                transactions.add(transaction);
+        return transactions;
+    }
+
+    private long generateNextId(){
+        /**
+         * Generate next id for a transaction based on last maximum id
+         * @return id long
+         */
+        long id = 0;
+        for(Transaction transaction : this.getAll()){
+            id = Math.max(id, transaction.getId());
+        }
+        return id + 1;
     }
 }

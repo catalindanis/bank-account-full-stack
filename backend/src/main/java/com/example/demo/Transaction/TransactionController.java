@@ -17,7 +17,14 @@ public class TransactionController {
     }
 
     @GetMapping("/get")
-    public List<Transaction> getAll() {
+    public List<Transaction> getAll(@RequestParam(required = false) Double minAmount, String dateEnd, String type) {
+        if(minAmount != null){
+            if(dateEnd != null)
+                return this.transactionService.getAllWithMinAmountAndBeforeDate(minAmount, dateEnd);
+            return this.transactionService.getAllWithMinAmount(minAmount);
+        }
+        else if(type != null)
+            return this.transactionService.getAllByType(type);
         return this.transactionService.getAll();
     }
 
