@@ -77,4 +77,11 @@ public class TransactionRepository {
         transaction.setAmount(newTransaction.getAmount());
         transaction.setType(newTransaction.getType());
     }
+
+    public void setTransactions(List<Transaction> transactions) {
+        /**
+         * Setter for transactions list
+         */
+        this.transactions = transactions;
+    }
 }

@@ -22,6 +22,9 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
+    /**
+     * All controller endpoints
+     */
     @GetMapping("/get")
     public List<Transaction> getAll(@RequestParam(required = false) Double minAmount, String dateEnd, String type) {
         if(minAmount != null){
@@ -32,6 +35,13 @@ public class TransactionController {
         else if(type != null)
             return this.transactionService.getAllByType(type);
         return this.transactionService.getAll();
+    }
+
+    @GetMapping("/filter")
+    public List<Transaction> getAll(@RequestParam(required = false) Double maxAmount, String type) {
+        if(maxAmount == null)
+            return this.transactionService.getAllWithoutType(type);
+        return this.transactionService.getAllByTypeWithMaxAmount(type, maxAmount);
     }
 
     @GetMapping("/record")
@@ -65,5 +75,10 @@ public class TransactionController {
         else
             result = this.transactionService.deleteTransactionFromInterval(dateStart, dateEnd);
         return String.valueOf(result);
+    }
+
+    @PutMapping("/undo")
+    public void undo(){
+        this.transactionService.undo();
     }
 }
