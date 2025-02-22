@@ -38,9 +38,7 @@ function App() {
                     </div>
                     <div>
                         <button style={{marginTop: 45}} onClick={() => {
-                            console.log(amount)
-                            console.log(date)
-                            console.log(type)
+                            
                         }}>
                             Add transaction
                         </button>

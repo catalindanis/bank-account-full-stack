@@ -181,7 +181,10 @@ public class TransactionService {
         LocalDate realDate = LocalDate.parse(date).plusDays(1);
         for(Transaction transaction : this.getAll())
             if(transaction.getDate().isBefore(realDate))
-                balance += transaction.getAmount();
+                if(transaction.getType().equals("enter"))
+                    balance += transaction.getAmount();
+                else
+                    balance -= transaction.getAmount();
         return balance;
     }
 
