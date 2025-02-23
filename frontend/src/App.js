@@ -1,8 +1,10 @@
 import './App.css';
 import {useState} from "react";
 import AddTransactionComponent from "./AddTransactionComponent";
+import TransactionsHistoryComponent from "./TransactionsHistoryComponent";
 
 function App() {
+    const [transactions, setTransactions] = useState([]);
 
     return (
         <div className="App" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -10,10 +12,8 @@ function App() {
                 <img src="./logo.png" style={{height: 25, marginRight: 10}}/>
                 <h1>Bank account</h1>
             </div>
-            <AddTransactionComponent></AddTransactionComponent>
-            <div style={{border: '1px solid black', marginTop: 30, width: '585px', borderRadius: 10}}>
-                <h3 style={{marginTop: 5, marginBottom: 5, textAlign: "left", marginLeft: 10}}>Transactions history</h3>
-            </div>
+            <AddTransactionComponent transactions={transactions} setTransactions={setTransactions}></AddTransactionComponent>
+            <TransactionsHistoryComponent transactions={transactions} setTransactions={setTransactions}></TransactionsHistoryComponent>
         </div>
     );
 }

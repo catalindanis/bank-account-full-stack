@@ -1,7 +1,8 @@
 import axios from "axios";
 import {useState} from "react";
+import {updateTransactions} from "./TransactionsHistoryComponent";
 
-export default function AddTransactionComponent(){
+export default function AddTransactionComponent({transactions, setTransactions}){
     const [amount, setAmount] = useState(null);
     const [date, setDate] = useState(null);
     const [type, setType] = useState(null);
@@ -28,31 +29,24 @@ export default function AddTransactionComponent(){
                     <h4 style={{marginBottom: 0}}>Type</h4>
                     <label style={{marginRight: 10}}>
                         <input type={"radio"} onChange={() => setType("enter")}
-                               checked={type === "enter" ? true : false}/>
+                               checked={type === "enter"}/>
                         Enter
                     </label>
                     <label>
                         <input type={"radio"} onChange={() => setType("exit")}
-                               checked={type === "exit" ? true : false}/>
+                               checked={type === "exit"}/>
                         Exit
                     </label>
                 </div>
                 <div>
                     <button style={{marginTop: 45}} onClick={() => {
-                        if (amount == null || amount <= 0) {
-                            setOperationMessage("Please enter amount");
-                            return;
-                        }
-                        if (isNaN(new Date(date)) || date == null || new Date(date) > new Date()) {
-                            setOperationMessage("Please enter a valid date");
-                            return;
-                        }
-                        if (type == null) {
-                            setOperationMessage("Please select type");
+                        const validateResult = validateTransaction(amount, date, type);
+                        if(validateResult !== true) {
+                            setOperationMessage(validateResult);
                             return;
                         }
 
-                        const result = addTransaction(amount, date, type);
+                        const result = addTransaction(amount, date, type, transactions, setTransactions);
                         setOperationMessage(result);
                     }}>
                         Add transaction
@@ -64,7 +58,20 @@ export default function AddTransactionComponent(){
     );
 }
 
-async function addTransaction(amount, date, type){
+export function validateTransaction(amount, date, type){
+    if (amount == null || amount <= 0) {
+        return "Please enter amount";
+    }
+    if (isNaN(new Date(date)) || date == null || new Date(date) > new Date()) {
+        return "Please enter a valid date"
+    }
+    if (type == null) {
+        return "Please select type";
+    }
+    return true;
+}
+
+async function addTransaction(amount, date, type, transactions, setTransactions){
     try{
         const response = await axios.post('http://localhost:8080/add', null,
             {
@@ -74,8 +81,10 @@ async function addTransaction(amount, date, type){
                     type: type.toString(),
                 }
             })
-        if(response.status === 200)
+        if(response.status === 200) {
+            updateTransactions(transactions, setTransactions);
             return "Transaction added successfully"
+        }
         return response.data;
     }
     catch (error) {

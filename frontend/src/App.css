@@ -28,11 +28,15 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
+@keyframes rotateAnimation {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
+}
+
+.rotate-anim {
+  animation: rotateAnimation 0.5s linear;
 }
