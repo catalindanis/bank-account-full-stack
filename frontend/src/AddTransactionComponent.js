@@ -14,19 +14,21 @@ export default function AddTransactionComponent({transactions, setTransactions})
             borderRadius: 10,
             paddingLeft: 10,
             paddingRight: 10,
-            paddingBottom: operationMessage == null ? 5 : 0
+            paddingBottom: operationMessage == null ? 5 : 0,
+            textAlign: "left",
         }}>
-            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: -10}}>
+            <h4 style={{marginBottom: 0, marginTop: 0, fontSize: 20}}>New transaction:</h4>
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: -15, textAlign: "center"}}>
                 <div style={{marginRight: 20}}>
-                    <h4 style={{marginBottom: 0}}>Amount</h4>
+                    <p style={{marginBottom: 0}}>Amount:</p>
                     <input type={"number"} onChange={e => setAmount(e.target.value)} placeholder="Enter amount:"/>
                 </div>
                 <div style={{marginRight: 20}}>
-                    <h4 style={{marginBottom: 0}}>Date</h4>
+                    <p style={{marginBottom: 0}}>Date:</p>
                     <input type={"date"} onChange={e => setDate(e.target.value)}/>
                 </div>
                 <div style={{marginRight: 20}}>
-                    <h4 style={{marginBottom: 0}}>Type</h4>
+                    <p style={{marginBottom: 0}}>Type:</p>
                     <label style={{marginRight: 10}}>
                         <input type={"radio"} onChange={() => setType("enter")}
                                checked={type === "enter"}/>
@@ -49,7 +51,7 @@ export default function AddTransactionComponent({transactions, setTransactions})
                         const result = addTransaction(amount, date, type, transactions, setTransactions);
                         setOperationMessage(result);
                     }}>
-                        Add transaction
+                        Add
                     </button>
                 </div>
             </div>
