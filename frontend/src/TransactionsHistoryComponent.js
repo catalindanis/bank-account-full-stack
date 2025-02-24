@@ -10,7 +10,7 @@ export default function TransactionsHistoryComponent({transactions, setTransacti
     const height = '300'
 
     useEffect(() => {
-        updateTransactions(transactions, setTransactions);
+        reloadTransactions(transactions, setTransactions);
     }, [])
 
     return (
@@ -19,14 +19,14 @@ export default function TransactionsHistoryComponent({transactions, setTransacti
                 <h3 style={{marginTop: 5, marginBottom: 5, textAlign: "left", marginLeft: 10}}>Transactions history</h3>
                 <button style={{marginLeft: "auto", background: 0, border: 0}}
                 onClick={() => {
-                    updateTransactions(transactions, setTransactions);
+                    reloadTransactions(transactions, setTransactions);
                     setRotateAnimation(true);
                     setTimeout(() => {setRotateAnimation(false)}, 500)
                 }}>
                     <i style={{fontSize: 18}} className={"fas fa-rotate " + (rotateAnimation ? "rotate-anim" : "")}></i>
                 </button>
             </div>
-            {transactions.length == 0 ?
+            {transactions.length === 0 ?
                 <div style={{border: '1px solid black', marginBottom: 0, width: parseInt(width) - 1}}>
                     <p style={{
                     marginTop: 5,
@@ -40,7 +40,9 @@ export default function TransactionsHistoryComponent({transactions, setTransacti
                                      id={transaction["id"]}
                                      type={transaction["type"]}
                                      amount={transaction["amount"]}
-                                     date={transaction["date"]}>
+                                     date={transaction["date"]}
+                                    transactions={transactions}
+                                    setTransactions={setTransactions}>
                         </Transaction>
                     ))}
                 </div>
@@ -49,7 +51,7 @@ export default function TransactionsHistoryComponent({transactions, setTransacti
     );
 }
 
-export function updateTransactions(transactions, setTransactions){
+export function reloadTransactions(transactions, setTransactions){
     getTransactions().then(result => {
         setTransactions(result);
         //console.log(transactions);

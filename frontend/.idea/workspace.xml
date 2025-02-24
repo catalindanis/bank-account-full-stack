@@ -8,6 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AddTransactionComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AddTransactionComponent.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Transaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Transaction.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TransactionsHistoryComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/TransactionsHistoryComponent.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +85,8 @@
       <option name="presentableId" value="Default" />
       <updated>1740229726802</updated>
       <workItem from="1740229728248" duration="10987000" />
-      <workItem from="1740313269628" duration="9209000" />
+      <workItem from="1740313269628" duration="9304000" />
+      <workItem from="1740407605285" duration="1519000" />
     </task>
     <servers />
   </component>

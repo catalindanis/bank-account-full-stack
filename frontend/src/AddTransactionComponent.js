@@ -1,6 +1,6 @@
 import axios from "axios";
 import {useState} from "react";
-import {updateTransactions} from "./TransactionsHistoryComponent";
+import {reloadTransactions} from "./TransactionsHistoryComponent";
 
 export default function AddTransactionComponent({transactions, setTransactions}){
     const [amount, setAmount] = useState(null);
@@ -84,7 +84,7 @@ async function addTransaction(amount, date, type, transactions, setTransactions)
                 }
             })
         if(response.status === 200) {
-            updateTransactions(transactions, setTransactions);
+            reloadTransactions(transactions, setTransactions);
             return "Transaction added successfully"
         }
         return response.data;

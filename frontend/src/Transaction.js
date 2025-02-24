@@ -1,7 +1,10 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import {useState} from "react";
+import axios from "axios";
+import {reloadTransactions} from "./TransactionsHistoryComponent";
+import {validateTransaction} from "./AddTransactionComponent";
 
-export default function Transaction({id, amount, date, type}){
+export default function Transaction({id, amount, date, type, transactions, setTransactions}){
     const [amountState, setAmountState] = useState(amount);
     const [dateState, setDateState] = useState(date);
     const [typeState, setTypeState] = useState(type);
@@ -40,7 +43,17 @@ export default function Transaction({id, amount, date, type}){
                         Exit
                     </label>
                 </div>
-                <button style={{marginLeft: "auto", marginRight: 10}}>
+                <button style={{marginLeft: "auto", marginRight: 10}}
+                onClick={() => {
+                    const validateResult = validateTransaction(amountState, dateState, typeState);
+                    if(validateResult !== true) {
+                        setOperationMessage(validateResult);
+                        return;
+                    }
+
+                    const result = updateTransaction(id, amountState, dateState, typeState, transactions, setTransactions);
+                    setOperationMessage(result);
+                }}>
                     Save
                 </button>
                 <button style={{marginRight: 10}}>
@@ -50,4 +63,26 @@ export default function Transaction({id, amount, date, type}){
             <p style={{marginTop: 5, marginBottom: 5}}>{operationMessage}</p>
         </div>
     );
+}
+
+async function updateTransaction(id, amount, date, type, transactions, setTransactions){
+    try{
+        const response = await axios.put('http://localhost:8080/update', null,
+            {
+                params: {
+                    id: id,
+                    date: date.toString(),
+                    amount: amount,
+                    type: type.toString(),
+                }
+            })
+        if(response.status === 200) {
+            reloadTransactions(transactions, setTransactions);
+            return null;
+        }
+        return response.data;
+    }
+    catch (error) {
+        return "An unknown error occurred. Check the log to see more details."
+    }
 }
