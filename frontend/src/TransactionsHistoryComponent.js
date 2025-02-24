@@ -27,7 +27,7 @@ export default function TransactionsHistoryComponent({transactions, setTransacti
                 </button>
             </div>
             {transactions.length === 0 ?
-                <div style={{border: '1px solid black', marginBottom: 0, width: parseInt(width) - 1}}>
+                <div style={{borderTop: '1px solid black', marginBottom: 0, width: parseInt(width)}}>
                     <p style={{
                     marginTop: 5,
                     marginBottom: 5,

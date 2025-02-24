@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000") //allow frontend to send requests to backend
+@CrossOrigin(origins = "*") //allow frontend to send requests to backend
 @RestController
 public class TransactionController {
     /**

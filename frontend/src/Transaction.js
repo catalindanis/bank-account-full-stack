@@ -56,7 +56,10 @@ export default function Transaction({id, amount, date, type, transactions, setTr
                 }}>
                     Save
                 </button>
-                <button style={{marginRight: 10}}>
+                <button style={{marginRight: 10}} onClick={() => {
+                    const result = deleteTransaction(id, transactions, setTransactions);
+                    setOperationMessage(result);
+                }}>
                     Delete
                 </button>
             </div>
@@ -74,6 +77,25 @@ async function updateTransaction(id, amount, date, type, transactions, setTransa
                     date: date.toString(),
                     amount: amount,
                     type: type.toString(),
+                }
+            })
+        if(response.status === 200) {
+            reloadTransactions(transactions, setTransactions);
+            return null;
+        }
+        return response.data;
+    }
+    catch (error) {
+        return "An unknown error occurred. Check the log to see more details."
+    }
+}
+
+async function deleteTransaction(id, transactions, setTransactions){
+    try{
+        const response = await axios.delete('http://localhost:8080/delete',
+            {
+                params: {
+                    id: id,
                 }
             })
         if(response.status === 200) {
