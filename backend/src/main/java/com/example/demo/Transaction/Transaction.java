@@ -35,7 +35,6 @@ public class Transaction {
 
     /**
      * Getters and setters for transaction properties
-     * @return
      */
     public String getType() {
         return type;
