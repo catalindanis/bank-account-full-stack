@@ -11,6 +11,9 @@ public class TransactionRepository {
      * In-memory repository of transactions
      */
 
+    /**
+     * Transaction properties
+     */
     List<Transaction> transactions;
 
     public TransactionRepository() {

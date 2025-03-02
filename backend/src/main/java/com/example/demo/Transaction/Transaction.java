@@ -68,17 +68,32 @@ public class Transaction {
         this.id = id;
     }
 
-    /**
-     * String format of transaction
-     * @return
-     */
     @Override
     public String toString() {
+        /**
+         * String format of transaction
+         * @return
+         */
         return "Transaction{" +
                 "id=" + id +
                 ", date=" + date +
                 ", amount=" + amount +
                 ", type='" + type + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o)
+            return true;
+
+        if(!(o instanceof Transaction))
+            return false;
+
+        Transaction t = (Transaction) o;
+
+        return this.id == t.getId() && this.date.equals(t.getDate())
+                && this.amount == t.getAmount()
+                && this.type.equals(t.getType());
     }
 }

@@ -14,6 +14,9 @@ public class TransactionService {
      * Service for transactions
      */
 
+    /**
+     * Transaction properties
+     */
     private final TransactionRepository transactionRepository;
     private List<List<Transaction>> transactionsHistory;
 

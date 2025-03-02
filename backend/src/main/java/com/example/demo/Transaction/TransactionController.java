@@ -13,6 +13,9 @@ public class TransactionController {
      * Controller of transactions endpoints
      */
 
+    /**
+     * Transaction properties
+     */
     private final TransactionService transactionService;
 
     @Autowired
