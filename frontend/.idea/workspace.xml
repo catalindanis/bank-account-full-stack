@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8fff6eef-6375-49e1-acf6-d71f0fe1512c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/com/example/demo/Transaction/TransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/com/example/demo/Transaction/TransactionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/com/example/demo/Transaction/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/com/example/demo/Transaction/TransactionService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AddTransactionComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AddTransactionComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Transaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Transaction.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TransactionsHistoryComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/TransactionsHistoryComponent.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +93,7 @@
       <workItem from="1740516413398" duration="1891000" />
       <workItem from="1740593153424" duration="1483000" />
       <workItem from="1740763280408" duration="871000" />
+      <workItem from="1740948059470" duration="6219000" />
     </task>
     <servers />
   </component>

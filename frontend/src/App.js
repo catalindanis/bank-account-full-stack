@@ -15,21 +15,6 @@ function App() {
             </div>
             <AddTransactionComponent transactions={transactions} setTransactions={setTransactions}></AddTransactionComponent>
             <TransactionsHistoryComponent transactions={transactions} setTransactions={setTransactions}></TransactionsHistoryComponent>
-            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
-                <button style={{marginRight: 20}}>
-                    Cautare
-                </button>
-                <button style={{marginRight: 20}}>
-                    Stergere avansata
-                </button>
-                <button style={{marginRight: 20}}>
-                    Rapoarte
-                </button>
-                <button style={{marginRight: 20}}>
-                    Filtrare
-                </button>
-                <Undo transactions={transactions} setTransactions={setTransactions}></Undo>
-            </div>
         </div>
     );
 }

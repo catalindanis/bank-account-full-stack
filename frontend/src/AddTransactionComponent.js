@@ -84,7 +84,10 @@ async function addTransaction(amount, date, type, transactions, setTransactions)
                 }
             })
         if(response.status === 200) {
-            reloadTransactions(transactions, setTransactions);
+            reloadTransactions({
+                transactions: transactions,
+                setTransactions: setTransactions
+            });
             return "Transaction added successfully"
         }
         return response.data;

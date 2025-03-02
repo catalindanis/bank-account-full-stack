@@ -80,7 +80,10 @@ async function updateTransaction(id, amount, date, type, transactions, setTransa
                 }
             })
         if(response.status === 200) {
-            reloadTransactions(transactions, setTransactions);
+            reloadTransactions({
+                transactions: transactions,
+                setTransactions: setTransactions
+            });
             return null;
         }
         return response.data;
@@ -99,7 +102,10 @@ async function deleteTransaction(id, transactions, setTransactions){
                 }
             })
         if(response.status === 200) {
-            reloadTransactions(transactions, setTransactions);
+            reloadTransactions({
+                transactions: transactions,
+                setTransactions: setTransactions
+        });
             return null;
         }
         return response.data;
