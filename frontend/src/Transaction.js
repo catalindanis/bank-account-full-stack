@@ -21,7 +21,7 @@ export default function Transaction({id, amount, date, type, transactions, setTr
                 flexDirection: 'row',
                 border: '1px solid black',
                 borderRadius: 10,
-                marginTop: 0,
+                marginTop: 5,
                 marginBottom: 0,
             }}>
                 <p style={{marginLeft: 10, marginRight: 5}}>Amount:</p>
@@ -63,7 +63,7 @@ export default function Transaction({id, amount, date, type, transactions, setTr
                     Delete
                 </button>
             </div>
-            <p style={{marginTop: 5, marginBottom: 5}}>{operationMessage}</p>
+            <p style={{marginTop: 5, marginBottom: 0}}>{operationMessage}</p>
         </div>
     );
 }

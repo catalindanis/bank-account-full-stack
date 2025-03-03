@@ -15,7 +15,9 @@ async function undoLastOperation(transactions, setTransactions){
     try{
         const response = await axios.put('http://localhost:8080/undo')
         if(response.status === 200) {
-            reloadTransactions(transactions, setTransactions);
+            reloadTransactions({
+                transactions: transactions,
+                setTransactions: setTransactions});
             return "Undo successfully executed"
         }
         return response.data;

@@ -17,6 +17,7 @@ export default function TransactionsHistoryComponent({transactions, setTransacti
 
     const [minAmount, setMinAmount] = useState("");
     const [endDate, setEndDate] = useState("");
+    const [startDate, setStartDate] = useState("");
     const [type, setType] = useState(null);
 
     useEffect(() => {
@@ -28,7 +29,7 @@ export default function TransactionsHistoryComponent({transactions, setTransacti
     return (
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <div style={{border: '1px solid black', marginTop: 30, width: parseInt(width), borderRadius: 10}}>
-                <div style={{display: 'flex', flexDirection: 'row'}}>
+                <div style={{display: 'flex', flexDirection: 'row', borderBottom: "1px solid black"}}>
                     <h3 style={{marginTop: 5, marginBottom: 5, textAlign: "left", marginLeft: 10}}>Transactions
                         history</h3>
                     <button style={{marginLeft: "auto", background: 0, border: 0}}
@@ -50,7 +51,7 @@ export default function TransactionsHistoryComponent({transactions, setTransacti
                     </button>
                 </div>
                 {searchOption ?
-                    <div style={{display: 'flex', flexDirection: 'row', borderTop: '1px solid black'}}>
+                    <div style={{display: 'flex', flexDirection: 'row', borderBottom: '1px solid black'}}>
                         <text style={{marginLeft: 5, marginRight: 5}}>Minimum amount:</text>
                         <input type={"number"} value={minAmount} onChange={(e) => {
                             setMinAmount(e.target.value);
@@ -91,13 +92,56 @@ export default function TransactionsHistoryComponent({transactions, setTransacti
                         }}>Apply</button>
                     </div>
                     : null}
+                {deleteOption ?
+                    <div style={{display: 'flex', flexDirection: 'row', borderBottom: '1px solid black'}}>
+                        <text style={{marginLeft: 10, marginRight: 15}}>Start date:</text>
+                        <input type={"date"} value={startDate} onChange={(e) => {
+                            setStartDate(e.target.value)
+                            setType(null)
+                        }}/>
+                        <text style={{marginLeft: 10, marginRight: 15}}>End date:</text>
+                        <input type={"date"} value={endDate} onChange={(e) => {
+                            setEndDate(e.target.value)
+                            setType(null)
+                        }}/>
+                        <text style={{marginLeft: 10, marginRight: 20}}>Type:</text>
+                        <label style={{marginRight: 45, width: 10}}>
+                            Enter
+                            <input type={"radio"} onChange={() => {
+                                setType("enter")
+                                setEndDate("")
+                                setStartDate("")
+                            }}
+                                   checked={type === "enter"}/>
+                        </label>
+                        <label style={{width: 10}}>
+                            Exit
+                            <input type={"radio"} onChange={() => {
+                                setType("exit")
+                                setEndDate("")
+                                setStartDate("")
+                            }}
+                                   checked={type === "exit"}/>
+                        </label>
+                        <button style={{marginLeft: "auto", height: 42}} onClick={() => {
+                            deleteTransactions({
+                                startDate: startDate === "" ? null : startDate,
+                                endDate: endDate === "" ? null : endDate,
+                                type: type,
+                                transactions: transactions,
+                                setTransactions: setTransactions
+                            })
+                        }}>Delete
+                        </button>
+                    </div>
+                    : null}
                 {transactions.length === 0 ?
-                    <div style={{borderTop: '1px solid black', marginBottom: 0, width: parseInt(width)}}>
+                    <div style={{marginBottom: 0, width: parseInt(width)}}>
                         <p style={{
                             marginTop: 5,
                             marginBottom: 5,
                             textAlign: "left",
-                            marginLeft: 10
+                            marginLeft: 10,
                         }}>No transactions available</p>
                     </div> :
                     <div style={{
@@ -141,6 +185,7 @@ export default function TransactionsHistoryComponent({transactions, setTransacti
                                setSearchOption(false)
                                setMinAmount("")
                                setEndDate("")
+                               setStartDate("")
                                setType(null)
 
                                setDeleteOption(true)
@@ -155,6 +200,7 @@ export default function TransactionsHistoryComponent({transactions, setTransacti
                                setSearchOption(false)
                                setMinAmount("")
                                setEndDate("")
+                               setStartDate("")
                                setType(null)
 
                                setDeleteOption(false)
@@ -169,6 +215,7 @@ export default function TransactionsHistoryComponent({transactions, setTransacti
                                setSearchOption(false)
                                setMinAmount("")
                                setEndDate("")
+                               setStartDate("")
                                setType(null)
 
                                setDeleteOption(false)
@@ -182,6 +229,7 @@ export default function TransactionsHistoryComponent({transactions, setTransacti
                     setSearchOption(false)
                     setMinAmount("")
                     setEndDate("")
+                    setStartDate("")
                     setType(null)
 
                     setDeleteOption(false)
@@ -224,6 +272,33 @@ export function reloadTransactions({minAmount = null, endDate = null, type = nul
             setTransactions(result);
         })
 }
+
+export async function deleteTransactions({startDate = null, endDate = null, type = null, transactions, setTransactions} = {}) {
+    if(startDate != null){
+        if(endDate != null)
+            await axios.delete('http://localhost:8080/delete', {
+                params: {
+                    dateStart: startDate,
+                    dateEnd: endDate
+                }
+            })
+        else
+            await axios.delete('http://localhost:8080/delete', {
+                params: {
+                    dateStart: startDate,
+                }})
+    }
+    else
+        await axios.delete('http://localhost:8080/delete', {
+            params: {
+                type: type
+            }})
+
+    reloadTransactions({
+        transactions: transactions,
+        setTransactions: setTransactions});
+}
+
 
 async function getTransactions({minAmount = null, endDate = null, type = null} = {}) {
     return (await axios.get('http://localhost:8080/get', {
